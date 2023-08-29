@@ -22,45 +22,66 @@
 
 
 
+
+
       <!-- <div @click="mverificamos"> hacer clicks para probar</div> -->
-      <div class="flex justify-between space-x-4 h-24">
+      <div class="flex justify-between space-x-4">
         <!-- Primer bloque - Indicador principal en Card -->
         <div
-              class="flex-1 text-white rounded-lg p-3 shadow-md"
+              class="flex-1 text-white rounded-lg p-1 shadow-md"
               :class="getBgColor"
           >
-            <h2 class="text-sm">Avance de restricciones</h2>
-            <h3 class="text-xs">{{indicadorAvanceGeneral}}%</h3>
+            <h2 class="text-md">Avance General</h2>
+            <h3 class="text-lg">{{indicadorAvanceGeneral}}%</h3>
             <div class="h-2 bg-white mt-2">
-            <div class="h-full bg-orange400-500" v-bind:style="{ width: indicadorAvanceGeneral + '%' }"></div>
+            <div
+                class="h-full " v-bind:style="{ width: indicadorAvanceGeneral + '%' }"
+                :class="getBgColorBold"
+            ></div>
 
           </div>
         </div>
 
         <!-- Segundo bloque - 2 indicadores en Barra -->
-        <div class="flex-1 flex flex-col space-y-2 w-[9em]">
-          <div class="h-12">
-            <span class="mr-2 text-[0.6rem]">Tiempo de Anticipacion:</span>
-            <div class="h-2 w-full bg-gray-300">
-              <!-- <div class="h-full bg-green400-500" style="width: 30%;"></div> -->
+        <div class="space-y-2 w-[12em]">
+          <div class="text-xxs flex ">
+            <span class="mr-2 flex-col  ">Tiempo de Anticipacion <b>(Promedio)</b></span>
+
+            <!-- <span class="ml-2 text-md w-[20px] ws_green400"></span> -->
+            <div class="ml-2 text-center">
+            <div class="flex w-11 h-10 flex-none items-center justify-center rounded-lg bg-gray-100 group-hover:bg-white">
+              {{indicadorAnticipacion}}
+
             </div>
-            <span class="ml-2 text-xs">{{indicadorAnticipacion}} dias Promedio</span>
+            dias
           </div>
 
-          <div class="!mt-0 h-12">
-            <span class="mr-2 text-[0.6rem]">Tiempo de Cumplimiento:</span>
-            <div class="h-2 w-full bg-gray-300">
-              <!-- <div class="h-full bg-red400-500" style="width: 40%;"></div> -->
+          </div>
+        </div>
+
+        <div class="space-y-2 w-[12em]">
+          <div class="text-xxs flex ">
+            <span class="mr-2 flex-col  ">Tiempo de Cumplimiento <b>(Promedio)</b></span>
+
+            <!-- <span class="ml-2 text-md w-[20px] ws_green400"></span> -->
+            <div class="ml-2 text-center">
+            <div class="flex w-11 h-10 flex-none items-center justify-center rounded-lg bg-gray-100 group-hover:bg-white">
+              {{indicadorCumplimiento}}
+
             </div>
-            <span class="ml-2 text-xs">{{indicadorCumplimiento}} dias promedio</span>
+            dias
+          </div>
+
           </div>
         </div>
 
   <!-- Tercer bloque - 2 indicadores en Barra -->
-  <div class="flex-1 flex flex-col space-y-2 w-[9em]">
+  <div class="flex-1 flex flex-col space-y-2 w-[12em]">
     <!-- Aquí puedes agregar los dos indicadores adicionales siguiendo el formato anterior -->
   </div>
 </div>
+
+
 
 
 
@@ -128,7 +149,7 @@
 
           >
           <i class="fas fa-envelope"></i> Enviar Correos
-          <span class="badge absolute top-0 right-0 h-4 w-4 bg-red400-500 rounded-full text-white text-center text-tinysm min-w-[10px]" >{{countNotNoti}}</span>
+          <span class="badge absolute top-[-2] right-[-4] h-4 w-4 bg-red400-500 rounded-full text-white text-center text-tinysm min-w-[10px]" >{{countNotNoti}}</span>
         </button>
 
       </div>
@@ -205,33 +226,35 @@
     </div>
 
 
-
+    <br>
     <div class="flex flex-col">
       <!-- <div v-if="!fullScreen"> -->
       <div v-if="!fullScreen">
         <div v-for="(frente, index1) in rows" :key="index1">
-          <hr v-if="index1 !== 0" class="mb-6 bg-[#D0D9F1]" />
+          <!-- <hr v-if="index1 !== 0" class="mb-6 bg-[#D0D9F1]" /> -->
           <div
-            class="flex justify-between items-cener sm:w-full cursor-pointer"
-            @click="toggleOpen(frente.desFrente)"
-          >
+        :class="{
+            'border-t-2': index1 === 0,
+            'border-b-2': index1 === rows.length - 1,
+            'border-t': index1 !== 0,
+            'border-l-2 border-r-2':  1==1,
+            'rounded-t-lg': index1 === 0,
+            'rounded-b-lg': index1 === rows.length - 1
+        }"
+        class="pl-2 pb-2 pr-2 border-gray-300 flex justify-between items-center sm:w-full cursor-pointer"
+        @click="toggleOpen(frente.desFrente)"
+    >
             <span class="mt-1 text-sm text-activeText font-bold">
               {{ frente.desFrente }}
 
 
-                  <div class="!h-4 !w-40 bar">
-                      <div class="!h-4 filled"
+                  <div class="!h-3 !w-25 bar">
+                      <div class="!h-3 filled"
                           :class="countActivities(frente.codFrente).colorClass"
                           :style="{ width: countActivities(frente.codFrente).percentage + '%' }">
                           {{ countActivities(frente.codFrente).percentage }}%
                       </div>
                   </div>
-
-
-<!--
-              <div class="bar" :class="countActivities(frente.codFrente).colorClass" style="width: countActivities(frente.codFrente).percentage + '%'">
-               {{ countActivities(frente.codFrente).percentage }}%
-              </div> -->
 
 
               </span>
@@ -246,11 +269,11 @@
             />
           </div>
           <div
-            class="flex flex-col mt-2 pl-8 sm:pl-4"
+            class="flex flex-col  sm:pl-4 border-l-2 border-r-2"
             v-if="frente.isOpen"
           >
             <div
-              class="flex flex-col mb-4"
+              class="flex flex-col mb-4 pl-8 sm:pl-4 bg-[#f8f9f9] "
               v-for="(fase, index2) in frente.listaFase"
               :key="index2"
             >
@@ -521,6 +544,9 @@
 <script>
 // import excelParser from "../excel-parser";
 import moment from 'moment'
+import * as XLSX from "xlsx"
+import FileSaver from 'file-saver';
+import excelJs from 'exceljs'
 import exportFromJSON from "export-from-json";
 import Breadcrumb from "../../components/Layout/Breadcrumb.vue";
 
@@ -570,6 +596,7 @@ export default {
   },
   data: function () {
     return {
+      data_array: [],
       bloqConfirmNotification:false,
       // mensajeNotificaciones: 'Se enviaran '+this.countNotNoti+' Notificaciones',
       sizeActually: 0,
@@ -759,21 +786,224 @@ export default {
     store.dispatch("report_restrictions_for_project");
 
    },
-   downloadFile() {
-      // const nombreArchivo = 'formato.xlsx';
-      // const rutaArchivo = require('@/assets/' + nombreArchivo);
-      // this.$refs.descarga.href = rutaArchivo;
-      // this.$refs.descarga.download = nombreArchivo;
-      // this.$refs.descarga.click();
+   downloadFile(payload) {
+    store.dispatch("get_datos_restricciones", payload).then((response) => {
+      const Frente = [];
+      const Fase = [];
+      const TipoRestriccion = [];
+      const Responsable = [];
+      const Estado = [];
+      const Solicitante = [];
+      for(let i = 0; i < response.restricciones.length; i ++){
+        Frente[i] = response.restricciones[i]['desFrente'];
+        Fase[i] = response.restricciones[i]['listaFase'][0]['desFase'];
+        for(let j = 0; j < response.restricciones[i]['listaFase'][0]['listaRestricciones'].length; j ++){
 
-      const filePath = import.meta.env.VITE_WEB_FIN_BASE_URL+'/formato.xlsx';
-      const link = document.createElement('a');
-      link.href = filePath;
-      link.download = 'plantilla_data_masiva';
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-   },
+          if(response.restricciones[i]['listaFase'][0]['listaRestricciones'][j]['desUsuarioResponsable'] && (!Responsable.includes(response.restricciones[i]['listaFase'][0]['listaRestricciones'][j]['desUsuarioResponsable']))){
+            Responsable.push(response.restricciones[i]['listaFase'][0]['listaRestricciones'][j]['desUsuarioResponsable']);
+          }
+        }
+      } 
+      for(let k = 0; k < response.tipoRestricciones.length; k ++){
+        TipoRestriccion.push(response.tipoRestricciones[k]['desTipoRestricciones']);
+      }
+      for (let h = 0; h < response.estados.length; h ++){
+        Estado[h] = response.estados[h]['desEstado'];
+      }
+      Solicitante.push(response.solicitanteActual);
+      const data_array = [
+        {
+          "A": Frente,
+          "B": Fase,
+          "C": "",
+          "D": "",
+          "E": TipoRestriccion,  
+          "F": "",
+          "G": "",
+          "H": Responsable, 
+          "I": Estado, 
+          "J": Solicitante
+        }
+      ];
+
+      const workbook = new excelJs.Workbook();
+      const ws = workbook.addWorksheet('Restricciones');
+      ws.addRow(["Frente", "Fase", "Actividad", "Restriccion", "Tipo Restriccion", "Fecha Requerida", "Fecha Conciliada", "Responsable", "Estado", "Solicitante"]);
+      ws.addRow(["", "", "", "", "", "", "", "", "", ""]);
+      
+      const header_row = ws.getRow(1);
+      header_row.height = 33;
+      
+
+      const columnA = ws.getColumn('A');
+      columnA.width = 28;
+
+      const columnB = ws.getColumn('B');
+      columnB.width = 28;
+
+      const columnC = ws.getColumn('C');
+      columnC.width = 28;
+
+      const columnD = ws.getColumn('D');
+      columnD.width = 28;
+
+      const columnE = ws.getColumn('E');
+      columnE.width = 28;
+
+      const columnF = ws.getColumn('F');
+      columnF.width = 28;
+
+      const columnG = ws.getColumn('G');
+      columnG.width = 28;
+
+      const columnH = ws.getColumn('H');
+      columnH.width = 28;
+
+      const columnI = ws.getColumn('I');
+      columnI.width = 28;
+
+      const columnJ = ws.getColumn('J');
+      columnJ.width = 28;
+
+      const header_frente = ws.getCell('A1');
+      header_frente.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+                
+      }
+      header_frente.alignment = { horizontal:'center'};
+
+      const header_Fase = ws.getCell('B1');
+      header_Fase.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Fase.alignment = { horizontal:'center'};
+
+      const header_Actividad = ws.getCell('C1');
+      header_Actividad.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Actividad.alignment = { horizontal:'center'};
+
+      const header_Restriccion = ws.getCell('D1');
+      header_Restriccion.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Restriccion.alignment = { horizontal:'center'};
+
+      const header_Tipo = ws.getCell('E1');
+      header_Tipo.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Tipo.alignment = { horizontal:'center'};
+
+      const header_FechaR = ws.getCell('F1');
+      header_FechaR.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_FechaR.alignment = { horizontal:'center'};
+
+      const header_FechaC = ws.getCell('G1');
+      header_FechaC.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_FechaC.alignment = { horizontal:'center'};
+
+      const header_Responsable = ws.getCell('H1');
+      header_Responsable.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Responsable.alignment = { horizontal:'center'};
+
+      const header_Estado = ws.getCell('I1');
+      header_Estado.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Estado.alignment = { horizontal:'center'};
+
+      const header_Soli = ws.getCell('J1');
+      header_Soli.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'A5A5A5' },
+      }
+      header_Estado.alignment = { horizontal:'center'};
+
+      for(let i = 2; i < 100; i ++){
+        const validationCell_Frente = ws.getCell('A'+`"${i}"`);
+        validationCell_Frente.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].A.join(',')}"`],
+        };
+
+        const validationCell_Fase = ws.getCell('B'+`"${i}"`);
+        validationCell_Fase.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].B.join(',')}"`],
+        };
+
+        const validationCell_Tipo = ws.getCell('E'+`"${i}"`);
+        validationCell_Tipo.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].E.join(',')}"`],
+        };
+
+        const validationCell_Res = ws.getCell('H'+`"${i}"`);
+        validationCell_Res.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].H.join(',')}"`],
+        };
+
+        const validationCell_Estado = ws.getCell('I'+`"${i}"`);
+        validationCell_Estado.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].I.join(',')}"`],
+        };
+
+        const validationCell_Soli = ws.getCell('J'+`"${i}"`);
+        validationCell_Soli.dataValidation = {
+          type: 'list',
+          allowBlank: false,
+          showDropDown: true,
+          formulae: [`"${data_array[0].J.join(',')}"`],
+        };
+      }
+
+      // Save the workbook to a file
+      workbook.xlsx.writeBuffer().then(buffer => {
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, 'Restricciones_Template.xlsx');
+      });
+      
+    });
+  },
 
     setColumnsStatus: function (payload) {
       let point = this;
@@ -1618,24 +1848,13 @@ export default {
 
           this.updateTipoRestricciones();
           this.updateVencimiento();
-
-
-
-
-
       });
-
 
       console.log(">> entro 3");
       await this.filterSectionHeight();
       this.pageloadflag = true;
 
-
     },
-
-
-
-
 
     /* TENEMOS FUNCIONES PARA EL FILTRO */
 
@@ -1778,19 +1997,10 @@ export default {
                 fase.listaRestricciones && fase.listaRestricciones.map(res => res.idUsuarioSolicitante)
               )
             ))];
-
-            // console.log(">> lista de ids")
-            // console.log(uniqueResponsables)
-
-            // Busca los responsables en la lista de integrantesAnaReS y obtén el desProyIntegrante.
             const solicitantes = datamembers.filter(integrante => uniqueSolicitantes.includes(integrante.idIntegrante)).map(integrante => {
               return { name: integrante.desProyIntegrante, id: integrante.idIntegrante , key: 2 };
             });
 
-            // console.log(">>>> llegando a esta parte")
-            // console.log(responsables)
-
-            // Encuentra el elemento "Reponsable" en options y actualiza su subOptions.
             const responsableOption = this.options.find(option => option.name === 'Solicitantes');
             if (responsableOption) {
               responsableOption.subOptions = solicitantes;
@@ -1833,12 +2043,7 @@ export default {
               contador++;
 
             }
-
-
           }
-
-
-
         });
       });
     });
@@ -1874,9 +2079,6 @@ export default {
     },
     indicadorAvanceGeneral: function () {
 
-        // Asume que 'data' es el objeto JSON que obtienes del API REST
-        // console.log("entramos al indicador de avance general ")
-        // console.log(this.$store.state.whiteproject_rows)
         let listaRestricciones = this.restrictions.flatMap(frente =>
         frente.listaFase.flatMap(fase => fase.listaRestricciones)
         );
@@ -1901,14 +2103,23 @@ export default {
     },
 
     getBgColor() {
-            if (this.indicadorAvanceGeneral === 100) {
-                return 'bg-green400';
-            } else if (this.indicadorAvanceGeneral >= 20) {
-                return 'bg-orange400';
-            } else {
-                return 'bg-red400';
-            }
-    },
+              if (this.indicadorAvanceGeneral === 100) {
+                  return 'bg-green400';
+              } else if (this.indicadorAvanceGeneral >= 20) {
+                  return 'bg-orange400';
+              } else {
+                  return 'bg-red400';
+              }
+      },
+      getBgColorBold() {
+              if (this.indicadorAvanceGeneral === 100) {
+                  return 'bg-greenbold';
+              } else if (this.indicadorAvanceGeneral >= 20) {
+                  return 'bg-orangebold';
+              } else {
+                  return 'bg-redbold';
+              }
+      },
     visibleOptions() {
         return this.options.filter(option => option.visible);
     },
@@ -1923,8 +2134,6 @@ export default {
       res.forEach(obj => {
         obj.listaFase.forEach(fase => {
           fase.listaRestricciones.forEach(restriccion => {
-            // console.log(">>>>>>>")
-            // console.log(restriccion)
             if (restriccion.flgNoti === 0) {
               contador++;
             }
@@ -2035,16 +2244,16 @@ export default {
 .bar {
     width: 200px;
     height: 20px;
-    border-radius: 10px;
+    border-radius: 2px;
     background-color: #f0f0f0; /* Un color de fondo para la parte no llena de la barra */
 }
 
 .bar .filled {
-    height: 20px;
-    border-radius: 10px;
+    /* height: 1.5em; */
+    border-radius: 2px;
     text-align: center;
-    font-size: 0.6em;
-    line-height: 20px;
+    font-size: 0.7em;
+    line-height: 1.2em;
     color: white;
 }
 
