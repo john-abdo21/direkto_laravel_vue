@@ -181,7 +181,7 @@ export default {
   methods: {
     validamosArray: function () {
 
-      console.log(this.restrictions)
+      console.log('restrictions',this.restrictions)
 
     },
     // mRestrictionData : function (idx) {

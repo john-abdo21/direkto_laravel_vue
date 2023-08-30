@@ -7,13 +7,14 @@
       </span>
     </div>
     <div class="flex items-end">
-      <button
-        title=" Crea un nuevo proyecto , asigne personal y asigne reportes."
-        class="h-8 sm:w-10/12 bg-orange text-white text-[0.7rem] leading-4 px-4 rounded"
-        @click="$emit('createNewProject')"
-      >
-        {{ buttonText }}
-      </button>
+      <router-link to="/home">
+
+        <button title=" Crea un nuevo proyecto , asigne personal y asigne reportes."
+          class="h-8 sm:w-10/12 bg-orange text-white text-[0.7rem] leading-4 px-4 rounded"
+          @click="$emit('createNewProject')">
+          {{ buttonText }}
+        </button>
+      </router-link>
     </div>
   </div>
 </template>

@@ -372,10 +372,10 @@
                       @openModal="openModal"
                       @addRowData="addRowData"
                     >
+                    </DataTableRestricciones>
                       <!-- <template #default="{ tr, id }">
                         <DataTableRestriccionesRow :statusRestriction="statusRestriction"  :listindex="[index1,index2,id]" :restriction_data="tr" :isupdate="tr.isupdate" :frontId="frente.codFrente" :phaseId="fase.codFase" :hideCols="hideCols" | @openModal="openModal" @updateRow = "updateRow" @RegistrarCambioRow = "RegistrarCambioRow"   />
                       </template> -->
-                    </DataTableRestricciones>
                   </div>
                 </div>
               </div>

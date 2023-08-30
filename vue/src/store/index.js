@@ -658,7 +658,6 @@ const store = createStore({
       // const anaresdata = 107;
       return axiosClient.post('get_data_restricciones', anaresdata)
         .then(res => {
-          //console.log(res.data);
         commit('setAnaResData', res.data.restricciones)
         commit('Set_Restriction', res.data.tipoRestricciones)
         commit('setAreaIntegrante', res.data.areaIntegrante)
@@ -674,7 +673,8 @@ const store = createStore({
           commit('setColOcultas', res.data.columnasOcultas)
 
         }
-        return(res.data)
+      console.log('res.data',res.data);
+      return(res.data)
       })
     },
     report_restrictions_for_project({commit}){
